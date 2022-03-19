@@ -10,11 +10,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    public SensorManager SM;
+    public SensorManager s;
     public float a;
     public float b;
     public float c;
@@ -22,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SM = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Objects.requireNonNull(SM).registerListener(mSensorListener, SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
+        s = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(s).registerListener(mSensorListener, s.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
         a = 10f;
         b = SensorManager.GRAVITY_EARTH;
         c = SensorManager.GRAVITY_EARTH;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 l2c = ((ColorDrawable) bl2).getColor();
                 l1.setBackgroundColor(l2c);
                 l2.setBackgroundColor(l1c);
+                Toast.makeText(MainActivity.this, "Shake Event Detected", Toast.LENGTH_SHORT).show();
             }
         }
         @Override
@@ -57,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
     };
     @Override
     protected void onResume() {
-        SM.registerListener(mSensorListener, SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+        s.registerListener(mSensorListener, s.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
         super.onResume();
     }
     @Override
     protected void onPause() {
-        SM.unregisterListener(mSensorListener);
+        s.unregisterListener(mSensorListener);
         super.onPause();
     }
 }
