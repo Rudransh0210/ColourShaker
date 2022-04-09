@@ -1,2 +1,2 @@
 # ColourShaker
-Swap screen colour on shaking
+Swap screen colour red and blue on shaking
